@@ -115,10 +115,10 @@ namespace WebApi.Controllers
         }
 
 
-/*To use this endpoint, send a PATCH request to http://localhost:5090/api/products/deactivate/{id}
-with no body. This will mark the product as unavailable (soft delete) by setting IsAvailable to false.
-You can also send a simple string in the body, but it's not required for this endpoint.
-This is useful for soft deleting a product without removing it from the database.   */
+        /*To use this endpoint, send a PATCH request to http://localhost:5090/api/products/deactivate/{id}
+        with no body. This will mark the product as unavailable (soft delete) by setting IsAvailable to false.
+        You can also send a simple string in the body, but it's not required for this endpoint.
+        This is useful for soft deleting a product without removing it from the database.   */
 
         [HttpPatch("deactivate/{id}")]
         public IActionResult SoftDelete(int id)
@@ -131,13 +131,13 @@ This is useful for soft deleting a product without removing it from the database
 
             product.IsAvailable = false; // Soft delete by marking as unavailable
             return Ok(); // 204 No Content response
-        }   
+        }
 
 
-/*To use this endpoint, send a DELETE request to http://localhost:5090/api/products/{id}
-This will remove the product with the specified ID from the list.
-You can also send a simple string in the body, but it's not required for this endpoint.     */
-[HttpDelete("{id}")]
+        /*To use this endpoint, send a DELETE request to http://localhost:5090/api/products/{id}
+        This will remove the product with the specified ID from the list.
+        You can also send a simple string in the body, but it's not required for this endpoint.     */
+        [HttpDelete("{id}")]
         public IActionResult DeleteProduct(int id)
         {
             var product = products.FirstOrDefault(p => p.Id == id);
@@ -148,7 +148,14 @@ You can also send a simple string in the body, but it's not required for this en
 
             products.Remove(product);
             return NoContent(); // 204 No Content response
-        }       
+        }
+
+/*To use this endpoint, send a GET request to http://localhost:5090/api/products/simulate-error
+This will return a 500 Internal Server Error response with a custom message.
+You can use this endpoint to test error handling in your application.*/ 
+        [HttpGet("simulate-error")]
+        public IActionResult SimulateError()
+       =>  StatusCode(500, "This is a simulated error response. In a real application, this could be due to an internal server error or an exception that occurred while processing the request.");
 
     }
         
